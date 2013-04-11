@@ -1,7 +1,7 @@
 gpkg-tiles
 ==========
 
-An experimental tiling specification derived from the geopackage candidate standard. 
+An experimental tiling specification derived from the geopackage candidate standard. This version is just the publicly released candidate specification formatted for github.
 
 To contribute find an issue in the [tracker] (http://github.com/cholmes/gpkg-tiles/issues) and make a pull request. 
 
