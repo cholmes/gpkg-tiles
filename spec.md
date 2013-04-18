@@ -67,7 +67,7 @@ the data is known exactly, and no rotation of the image is required.
 | Column Name | ColumnType | Column Description | Null | Default | Key |
 | ----------- | ---------- | ------------------ | ---- | ------- | --- | 
 | `r_table_name` | text |	Name of the table containing the raster column, e.g. {FeatureTableName} OR {RasterLayerName}_tiles | no	|	| PK FK |
-| `r_raster_column` | text | Name of a column in a table that is a raster column with a BLOB data type | no | |	PK |
+| `r_raster_column` | text | Name of the column in `r_table_name` that is a raster column with a BLOB data type | no | |	PK |
 | `compr_qual_factor` |	integer |	Compression quality factor: 1 (lowest) to 100 (highest) for lossy compression; always 100 for lossless or no compression, -1 if unknown. | no |	-1 | |
 | `georectification` |	integer |	Is the raster georectified; 1=unknown, 0=not georectified, 1=georectified, 2=orthorectified |	no | -1 | |
 | `srid` |	integer |	Spatial Reference System ID: spatial_ref_sys.srid |	no | | FK |
