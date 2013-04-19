@@ -7,24 +7,29 @@ no applicable existing consensus, national or international specifications have 
 practices in this domain. In addition, various image file formats have different 
 representational capabilities, and include different self-descriptive metadata.  
 
-The Raster / Tile Store data / metadata model, conventions and SQL functions described below 
-support direct use of rasters and tiles in a GeoPackage in two ways. First, they specify how 
+The Tile Store data / metadata model and conventions and described below 
+support direct use of tiles in a GeoPackage in two ways. First, they specify how 
 existing applications may create SQL Views of the data /metadata model on top of existing 
-application tables that that follow different interface conventions. Second, they include 
+application tables that follow different interface conventions. Second, they include 
 and expose enough metadata information at both the dataset and record levels to allow 
 applications that use GeoPackage data to discover its characteristics without having to parse 
 all of the stored images. Applications that store GeoPackage raster and tile data, which are 
 presumed to have this information available, SHALL store sufficient metadata to enable its 
 intended use. 
 
-Following a convention used by [MBTiles] (https://github.com/mapbox/mbtiles-spec), the Raster
-/ Tile Store data model may be implemented directly as SQL tables in a SQLite database for 
-maximum performance, or as SQL views on top of tables in an existing SQLite Raster / Tile store
+Following a convention used by [MBTiles] (https://github.com/mapbox/mbtiles-spec), the
+Tile Store data model may be implemented directly as SQL tables in a SQLite database for 
+maximum performance, or as SQL views on top of tables in an existing SQLite Tile store
 for maximum adaptability and loose coupling to enable widespread implementation. A GeoPackage 
 can store multiple raster and tile pyramid data sets in different tables or views in the same 
-container. Following a convention used by [RasterLite] (https://www.gaia-gis.it/fossil/librasterlite/index), 
+container. 
+
+Additionally an extension specification enables storage of raster blobs using the same data /
+metadata model with Views to implement the Tile portion.
+
+Following a convention used by [RasterLite] (https://www.gaia-gis.it/fossil/librasterlite/index), 
 tables or views containing record-level metadata are named with a raster or tile table name prefix and 
-a “_rt_metadata” suffix, e.g. {RasterTableName}{_rt_metadata.  
+a “_rt_metadata” suffix, e.g. {RasterTableName}_rt_metadata.  
 
 The tables or views that implement the GeoPackage Raster / Tile Store data / metadata model are described 
 and discussed individually in the following subsections.
@@ -32,8 +37,9 @@ and discussed individually in the following subsections.
 [[Note 1]] (implementation.md#note-1)
 
 ### 2	Raster Columns
-A GeoPackage SHALL contain a `raster_columns` table or view as defined in this clause.  The `raster_columns` 
-table or view SHALL contain one row record describing each raster or tile column in any table in a GeoPackage.  The `r_raster_column` in `r_table_name` SHALL be defined as a BLOB data type.  
+A GeoPackage implementing Tiles SHALL contain a `raster_columns` table or view as defined in this clause.  The `raster_columns` 
+table or view SHALL contain one row record describing each tile column in any table in a GeoPackage.  
+The `r_raster_column` in `r_table_name` SHALL be defined as a BLOB data type.  
 
 The `compr_qual_factor` column value indicates the lowest image quality of any raster or tile in the 
 associated column on a scale from 1 (lowest) to 100 (highest) for rasters compressed with a lossy 
@@ -333,6 +339,7 @@ CREATE TABLE
     CONSTRAINT pk_smt_rm PRIMARY KEY (row_id_value, r_raster_column) ON CONFLICT ROLLBACK
   )
 ```
+
 
 ####Footnotes
 
