@@ -143,16 +143,6 @@ vary by powers of 2.
 
 [[Note 11]] (implementation.md#note-11) and [[Note 12]] (implementation.md#note-12)
 
-GeoPackages SHALL implement appropriate SQL triggers on each tiles table by executing the 
-`add_tile_triggers()` routine specified in clause 10.8 below with the tiles table as a parameter 
-value to ensure that 
-
-1.	The `zoom_level` value is specified for the tiles table in the `tile_matrix_metadata` table
-
-2.	The tile column value is between 0 and the `matrix_height` specified for the zoom_level in the `tile_matrix_metadata` table
-
-3.	The `tile_row value is between 0 and the `matrix_width` specified for the `zoom_level` in the `tile_matrix_metadata` table
-
 **Table 7** – tiles table
 + Table or View Name:   {TilesTableName} tiles table
 

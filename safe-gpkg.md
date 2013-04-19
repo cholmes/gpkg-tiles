@@ -16,6 +16,17 @@ for a zoom level for `t_table_name` before any tiles are inserted into the corre
 table, so that triggers on that table specified in clause 10.5 below may reference `tile_matrix_metadata` 
 column values for that zoom level to reject invalid data.
 
+GeoPackages SHALL implement appropriate SQL triggers on each tiles table by executing the 
+`add_tile_triggers()` routine specified in clause 10.8 below with the tiles table as a parameter 
+value to ensure that 
+
+1.	The `zoom_level` value is specified for the tiles table in the `tile_matrix_metadata` table
+
+2.	The tile column value is between 0 and the `matrix_height` specified for the zoom_level in the `tile_matrix_metadata` table
+
+3.	The `tile_row value is between 0 and the `matrix_width` specified for the `zoom_level` in the `tile_matrix_metadata` table
+
+
 ## SQL Tables
 
 ### 1.0 raster_columns SQL
