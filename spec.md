@@ -169,44 +169,6 @@ CREATE TABLE
   )
 ```
 
-### 5 Raster Tables
-
-Raster tables have raster columns defined as BLOB data types that contain rasters that are not part
-of tile matrix sets.  Every table in a GeoPackage that is not a tiles tables as as described in 
-clause 9.5 and that includes one or more raster columns is a raster table.  Raster tables are also 
-feature tables as specified in clause 8.4 above that may or may not have geometry columns in addition 
-to raster columns.
-
-Every raster table in a GeoPackage shall have a primary key defined on one or more columns so that row
-level metadata records may be linked to the rasters in it by rowid as described in clauses 10.7 and 11.3 below.
-
-[[Note 13]] (implementation.md#note-13)
-
-**Table 9** - EXAMPLE: `sample_rasters` Table or View
-+ Table or View Name: {TilesTableName} `sample_rasters`
-
-|Column Name | Column Type | Column Description |  Null | Default | Key |
-|------------|-------------|--------------------|------|---------|-----|
-| `id` | integer	 | Autoincrement primary key |	no |	|	PK |
-| `elevation`  | BLOB | Elevation coverage; of type raster_format_metadata.mime_type | no | | |
-| `description` | text | Description of the area | no | 'no desc' | |
-| `photo` | BLOB | Photograph of the area; of type_raster_format_metadata.mime_type | no | |
-
-**Table 10** - EXAMPLE: `sample_rasters` Table Definition SQL
-
-```SQL
-CREATE TABLE
-  sample_rasters
-  (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    elevation BLOB NOT NULL,
-    description TEXT NOT NULL DEFAULT 'no_desc',
-    photo BLOB NOT NULL
-  )
-```
-
-[[Note 14]] (implementation.md#note-14)
-
 ###6	Rasters or Tiles Table Metadata
 
 There SHALL be a {Raster|Tile TableName}_rt_metadata table or view for each rasters or tiles table 
