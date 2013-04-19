@@ -36,13 +36,12 @@ and discussed individually in the following subsections.
 ### 2	Tile Table Metadata
 A GeoPackage SHALL contain a `tile_table_metadata` table or view as defined in this clause. The 
 `tile_table_metadata` table or view SHALL contain one row record describing each tile table in a 
-GeoPackage.  The `t_table_name` column value SHALL be a row value of `r_table_name` in the `raster_columns` 
-table, enforced by a trigger.  The `is_times_two_zoom` column value SHALL be 1 if zoom level pixel sizes 
+GeoPackage.  The `is_times_two_zoom` column value SHALL be 1 if zoom level pixel sizes 
 vary by powers of 2 between adjacent zoom levels in the corresponding tile table, or 0 if not.
 
 [[Note 4]] (implementation.md#note-4) and [[Note 5]] (implementation.md#note-5)
 
-**Table 3** - `tile_table_metadata`
+**Table 2** - `tile_table_metadata`
 Table or View Name: `tile_table_metadata`
 
 | Column Name | Column Type	| Column Description | Null	| Default	Key |
@@ -52,14 +51,15 @@ Table or View Name: `tile_table_metadata`
 | `srid` |	integer |	Spatial Reference System ID: spatial_ref_sys.srid |	no | | FK |
 
 
-**Table 4** - `tile_table_metadata` Table Definition SQL
+**Table 3** - `tile_table_metadata` Table Definition SQL
 
 ```SQL
 CREATE TABLE
   tile_table_metadata
   (
     t_table_name TEXT NOT NULL PRIMARY KEY,
-    is_times_two_zoom INTEGER NOT NULL DEFAULT 1
+    is_times_two_zoom INTEGER NOT NULL DEFAULT 1,
+    srid INTEGER NOT NULL DEFAULT 0
   )
 ```
 

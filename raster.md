@@ -8,6 +8,11 @@ metadata on the storage of the actual raster.
 For now it is a place to store the raster specific information and notes from the main
 [specification] (spec.md).
 
+## General strategy
+
+Tiles spec should be just what's needed to get at the tiles. The raster spec should be 
+able to represent everything in the tile spec with views and complementary tables.
+
 
 ## Raster notes to include
 
@@ -74,3 +79,14 @@ CREATE TABLE
     CONSTRAINT fk_rc_r_gc FOREIGN KEY (r_table_name) REFERENCES geopackage_contents(table_name)
   )
 ```
+
+### From section 3
+
+The `t_table_name` column value SHALL be a row value of `r_table_name` in the `raster_columns` 
+table, enforced by a trigger.
+
+> Raster columns should need this, but not all tiles. So can add it in as a constraint in this portion of the spec.
+
+> Raster columns should implement a view of 'tile table metadata'. One question is what to do with SRID. 
+Seems useful to have on the tile table metadata, can we make a view of it from the raster column? And/or where 
+does the raster column get its is_times_two_zoom value from? I guess a raster could be the source of multiple tile sets.
