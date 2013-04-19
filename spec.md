@@ -1,7 +1,6 @@
 # GeoPackage Tiles Specification
 
-## 10  Raster Tile Store
-### 10.1	Raster Tile Introduction
+### 1 Tile Introduction
 There are a wide variety of commercial and open source conventions for storing, indexing,
 accessing and describing individual rasters and tiles in tile matrix pyramids. Unfortunately, 
 no applicable existing consensus, national or international specifications have standardized 
@@ -32,7 +31,7 @@ and discussed individually in the following subsections.
 
 [[Note 1]] (#note-1)
 
-### 10.2	Raster Columns
+### 2	Raster Columns
 A GeoPackage SHALL contain a `raster_columns` table or view as defined in this clause.  The `raster_columns` 
 table or view SHALL contain one row record describing each raster or tile column in any table in a GeoPackage.  The `r_raster_column` in `r_table_name` SHALL be defined as a BLOB data type.  
 
@@ -60,7 +59,7 @@ the data is known exactly, and no rotation of the image is required.
 
 [[Note 2]] (#note-2) and [[Note 3]] (#note-3)
 
-**Table 21** - `raster_columns` 
+**Table 1** - `raster_columns` 
 
  + Table or View Name: `raster_columns`
 
@@ -72,7 +71,7 @@ the data is known exactly, and no rotation of the image is required.
 | `georectification` |	integer |	Is the raster georectified; 1=unknown, 0=not georectified, 1=georectified, 2=orthorectified |	no | -1 | |
 | `srid` |	integer |	Spatial Reference System ID: spatial_ref_sys.srid |	no | | FK |
 
-**Table 1** - `raster_columns` Table Definition SQL
+**Table 2** - `raster_columns` Table Definition SQL
 
 ```SQL
 CREATE TABLE
@@ -89,7 +88,7 @@ CREATE TABLE
   )
 ```
 
-### 10.3	Tile Table Metadata
+### 3	Tile Table Metadata
 A GeoPackage SHALL contain a `tile_table_metadata` table or view as defined in this clause. The 
 `tile_table_metadata` table or view SHALL contain one row record describing each tile table in a 
 GeoPackage.  The `t_table_name` column value SHALL be a row value of `r_table_name` in the `raster_columns` 
@@ -98,7 +97,7 @@ vary by powers of 2 between adjacent zoom levels in the corresponding tile table
 
 [[Note 4]] (#note-4) and [[Note 5]] (#note-5)
 
-**Table 25** - `tile_table_metadata`
+**Table 3** - `tile_table_metadata`
 Table or View Name: `tile_table_metadata`
 
 | Column Name | Column Type	| Column Description | Null	| Default	Key |
@@ -106,7 +105,7 @@ Table or View Name: `tile_table_metadata`
 | t_table_name | text	| {RasterLayerName}{_tiles}	| no | PK |
 | is_times_two_zoom	| integer	| Zoom level pixel sizes vary by powers of 2 (0=false,1=true)	| no | 1 |
 
-**Table 2** - `tile_table_metadata` Table Definition SQL
+**Table 4** - `tile_table_metadata` Table Definition SQL
 
 ```SQL
 CREATE TABLE
@@ -117,7 +116,7 @@ CREATE TABLE
   )
 ```
 
-### 10.4	Tile Matrix Metadata
+### 4	Tile Matrix Metadata
 A GeoPackage SHALL contain a `tile_matrix_metadata` table or view as defined in this clause.  
 The `tile_matrix_metadata` table or view SHALL contain one row record for each zoom level that 
 contains one or more tiles in each tiles table.  It may contain row records for zoom levels in 
@@ -151,7 +150,7 @@ height at that level.
 
 [[Note 7]] (#note-7), [[Note 8]] (#note-8), [[Note 9]] (#note-9), and [[Note 10]] (#note-10) 
 
-**Table 29** - `tile_matrix_metadata`
+**Table 5** - `tile_matrix_metadata`
 + Table or View Name: `tile_matrix_metadata`
 
 |Column Name | Column Type | Column Description |	Null | Default | Key |
@@ -165,7 +164,7 @@ height at that level.
 | `pixel_x_size` |	double |	In `t_table_name` srid units or default meters for srid 0 (>0) |	no |	1 | |
 | `pixel_y_size` |	double |	In `t_table_name` srid units or default meters for srid 0 (>0) |	no |	1	| |
 
-**Table 3** - `tile_matrix_metadata` Table Creation SQL
+**Table 6** - `tile_matrix_metadata` Table Creation SQL
 
 ```SQL
 CREATE TABLE
@@ -186,7 +185,7 @@ CREATE TABLE
 
 
 
-### 10.5	Tiles Table
+### 5	Tiles Table
 Tiles in a tile matrix set with one or more zoom levels SHALL be stored in a GeoPackage in a tiles 
 table or view with a unique name for every different tile matrix set in the GeoPackage.  Each tiles 
 table or view SHALL be defined with the columns described in table 35 below.  Each tiles table or 
@@ -210,7 +209,7 @@ value to ensure that
 
 3.	The `tile_row value is between 0 and the `matrix_width` specified for the `zoom_level` in the `tile_matrix_metadata` table
 
-**Table 33** – tiles table
+**Table 7** – tiles table
 + Table or View Name:   {TilesTableName} tiles table
 
 |Column Name | Column Type | Column Description |  Null | Default | Key |
@@ -221,7 +220,7 @@ value to ensure that
 | `tile_row` |	integer	| 0 to `tile_matrix_metadata` `matrix_height` - 1 |	no	| 0 |	UK |
 | `tile_data` |	BLOB	| Of an image MIME type specified in clause 10.2 | no	| | |	
 
-**Table 4** - EXAMPLE: `sample_matrix_tiles` Table Definition SQL
+**Table 8** - EXAMPLE: `sample_matrix_tiles` Table Definition SQL
 
 ```SQL
 CREATE TABLE
@@ -236,7 +235,7 @@ CREATE TABLE
   )
 ```
 
-### 10.6 Raster Tables
+### 6 Raster Tables
 
 Raster tables have raster columns defined as BLOB data types that contain rasters that are not part
 of tile matrix sets.  Every table in a GeoPackage that is not a tiles tables as as described in 
@@ -249,7 +248,7 @@ level metadata records may be linked to the rasters in it by rowid as described 
 
 [[Note 13]] (#note-13)
 
-**Table 39** - EXAMPLE: `sample_rasters` Table or View
+**Table 9** - EXAMPLE: `sample_rasters` Table or View
 + Table or View Name: {TilesTableName} `sample_rasters`
 
 |Column Name | Column Type | Column Description |  Null | Default | Key |
@@ -259,7 +258,7 @@ level metadata records may be linked to the rasters in it by rowid as described 
 | `description` | text | Description of the area | no | 'no desc' | |
 | `photo` | BLOB | Photograph of the area; of type_raster_format_metadata.mime_type | no | |
 
-**Table 5** - EXAMPLE: `sample_rasters` Table Definition SQL
+**Table 10** - EXAMPLE: `sample_rasters` Table Definition SQL
 
 ```SQL
 CREATE TABLE
@@ -274,7 +273,7 @@ CREATE TABLE
 
 [[Note 14]] (#note-14)
 
-###10.7	Rasters or Tiles Table Metadata
+###7	Rasters or Tiles Table Metadata
 
 There SHALL be a {Raster|Tile TableName}_rt_metadata table or view for each rasters or tiles table 
 in a GeoPackage defined with the columns described in table 40 below.  
@@ -303,7 +302,7 @@ values define a bounding box that SHALL be the spatial extent of the area on the
 
 [[Note 17]] (#note-17)
 
-**Table 40** - `{RasterLayerName}_rt_metadata`
+**Table 11** - `{RasterLayerName}_rt_metadata`
 + Table or View Name: `{RasterLayerName}_rt_metadata`
 
 |Column Name | Column Type | Column Description |  Null | Default | Key |
@@ -317,7 +316,7 @@ values define a bounding box that SHALL be the spatial extent of the area on the
 | max_x	| double	| In raster_columns.srid	| no	| 180.0	| |
 | max_y	| double	| In raster_columns.srid	| no	| 90.0	| |
 
-**Table 6** - EXAMPLE: `{RasterLayerName}_rt_metadata` Table Definition SQL
+**Table 12** - EXAMPLE: `{RasterLayerName}_rt_metadata` Table Definition SQL
 
 ```SQL
 CREATE TABLE
