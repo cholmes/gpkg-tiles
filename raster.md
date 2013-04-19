@@ -90,3 +90,8 @@ table, enforced by a trigger.
 > Raster columns should implement a view of 'tile table metadata'. One question is what to do with SRID. 
 Seems useful to have on the tile table metadata, can we make a view of it from the raster column? And/or where 
 does the raster column get its is_times_two_zoom value from? I guess a raster could be the source of multiple tile sets.
+
+{RasterLayerName}{_tiles} for the Column Description of the tile_table_metadata
+
+> I think this is saying that the name of the tile table should be the name of the raster layer plus _tiles if it's a 
+raster? That doesn't seem to allow for different tile sets derived from the same raster. Though I'm not sure if that's intended.

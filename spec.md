@@ -46,7 +46,7 @@ Table or View Name: `tile_table_metadata`
 
 | Column Name | Column Type	| Column Description | Null	| Default	Key |
 |-------------|-------------|--------------------|------|-------------|
-| t_table_name | text	| {RasterLayerName}{_tiles}	| no | PK |
+| t_table_name | text	| Name of the Tile Table	| no | PK |
 | is_times_two_zoom	| integer	| Zoom level pixel sizes vary by powers of 2 (0=false,1=true)	| no | 1 |
 | `srid` |	integer |	Spatial Reference System ID: spatial_ref_sys.srid |	no | | FK |
 
