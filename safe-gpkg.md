@@ -9,6 +9,13 @@ that will maintain its consistency.
 For the immediate term, however, it will just be a spot for the big long SQL blocks
 in the specification to live, so they don't clutter it up.
 
+## Trigger language from main spec
+
+A `tile_matrix_metadata` row record SHALL be inserted 
+for a zoom level for `t_table_name` before any tiles are inserted into the corresponding tiles 
+table, so that triggers on that table specified in clause 10.5 below may reference `tile_matrix_metadata` 
+column values for that zoom level to reject invalid data.
+
 ## SQL Tables
 
 ### 1.0 raster_columns SQL
@@ -394,3 +401,4 @@ CREATE TRIGGER 'sample_rasters_rt_metadata_row_id_value_update'
 ```SQL
 INSERT INTO sample_matrix_tiles_rt_metadata VALUES (1, "tile_data", 1, -77.0, 38.0, -75.0, 40.0, 100,)
 ```
+

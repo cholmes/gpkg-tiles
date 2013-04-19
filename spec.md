@@ -67,10 +67,7 @@ CREATE TABLE
 A GeoPackage SHALL contain a `tile_matrix_metadata` table or view as defined in this clause.  
 The `tile_matrix_metadata` table or view SHALL contain one row record for each zoom level that 
 contains one or more tiles in each tiles table.  It may contain row records for zoom levels in 
-a tiles table that do not contain tiles. A `tile_matrix_metadata` row record SHALL be inserted 
-for a zoom level for `t_table_name` before any tiles are inserted into the corresponding tiles 
-table, so that triggers on that table specified in clause 10.5 below may reference `tile_matrix_metadata` 
-column values for that zoom level to reject invalid data. 
+a tiles table that do not contain tiles.  
 
 The `tile_matrix_metadata` table documents the structure of the tile matrix at each zoom level 
 in each tiles table. It allows GeoPackages to contain rectangular as well as square tiles (e.g. 
