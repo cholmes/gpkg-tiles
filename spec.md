@@ -25,76 +25,15 @@ can store multiple raster and tile pyramid data sets in different tables or view
 container. 
 
 Additionally an extension specification enables storage of raster blobs using the same data /
-metadata model with Views to implement the Tile portion.
+metadata model with Views to implement the Tile portion.  
 
-Following a convention used by [RasterLite] (https://www.gaia-gis.it/fossil/librasterlite/index), 
-tables or views containing record-level metadata are named with a raster or tile table name prefix and 
-a “_rt_metadata” suffix, e.g. {RasterTableName}_rt_metadata.  
-
-The tables or views that implement the GeoPackage Raster / Tile Store data / metadata model are described 
+The tables or views that implement the GeoPackage Tile Store data / metadata model are described 
 and discussed individually in the following subsections.
 
 [[Note 1]] (implementation.md#note-1)
 
-### 2	Raster Columns
-A GeoPackage implementing Tiles SHALL contain a `raster_columns` table or view as defined in this clause.  The `raster_columns` 
-table or view SHALL contain one row record describing each tile column in any table in a GeoPackage.  
-The `r_raster_column` in `r_table_name` SHALL be defined as a BLOB data type.  
 
-The `compr_qual_factor` column value indicates the lowest image quality of any raster or tile in the 
-associated column on a scale from 1 (lowest) to 100 (highest) for rasters compressed with a lossy 
-compression algorithm. It is always 100 if all rasters or tiles are compressed with a lossless 
-compression algorithm, or are not compressed.  The value -1 indicates "unknown" and is specified as 
-the default value.
-
-The `georectification` column value indicates the minimum level of georectification to areas on the 
-earth for all rasters or tiles in the associated column are georectified. A value of -1 indicates "unknown" 
-as is specified as the default value. A value of 0 indicates that no rasters or tiles are georectified. 
-A value of 1 indicates that all rasters or tiles are georectified (but not necessarily orthorectified). 
-A value of 2 indicates that all rasters or tiles are orthorectified (which implies georectified) to 
-accurately align with real world coordinates, have constant scale, and support direct measurement of 
-distances, angles, and areas.
-
-The srid SHALL have a value contained in the `spatial_ref_sys` table defined in clause 9.2 above.
-
-All GeoPackages SHALL support image/png and image/jpeg formats for rasters and tiles. GeoPackages may 
-support image/x-webp and image/tiff formats for rasters and tiles. GeoPackage support for the image/tiff 
-format [[31]] (#31) is limited to GeoTIFF [[32]] (#32) images that meet the requirements of the NGA 
-Implementation Profile [[33]] (#33) for coordinate transformation case 3 where the position and scale of 
-the data is known exactly, and no rotation of the image is required.
-
-[[Note 2]] (implementation.md#note-2) and [[Note 3]] (implementation.md#note-3)
-
-**Table 1** - `raster_columns` 
-
- + Table or View Name: `raster_columns`
-
-| Column Name | ColumnType | Column Description | Null | Default | Key |
-| ----------- | ---------- | ------------------ | ---- | ------- | --- | 
-| `r_table_name` | text |	Name of the table containing the raster column, e.g. {FeatureTableName} OR {RasterLayerName}_tiles | no	|	| PK FK |
-| `r_raster_column` | text | Name of a column in a table that is a raster column with a BLOB data type | no | |	PK |
-| `compr_qual_factor` |	integer |	Compression quality factor: 1 (lowest) to 100 (highest) for lossy compression; always 100 for lossless or no compression, -1 if unknown. | no |	-1 | |
-| `georectification` |	integer |	Is the raster georectified; 1=unknown, 0=not georectified, 1=georectified, 2=orthorectified |	no | -1 | |
-| `srid` |	integer |	Spatial Reference System ID: spatial_ref_sys.srid |	no | | FK |
-
-**Table 2** - `raster_columns` Table Definition SQL
-
-```SQL
-CREATE TABLE
-  raster_columns
-  (
-    r_table_name TEXT NOT NULL,
-    r_raster_column TEXT NOT NULL,
-    compr_qual_factor INTEGER NOT NULL DEFAULT -1,
-    georectification INTEGER NOT NULL DEFAULT -1,
-    srid INTEGER NOT NULL DEFAULT 0,
-    CONSTRAINT pk_rc PRIMARY KEY (r_table_name, r_raster_column) ON CONFLICT ROLLBACK,
-    CONSTRAINT fk_rc_r_srid FOREIGN KEY (srid) REFERENCES spatial_ref_sys(srid),
-    CONSTRAINT fk_rc_r_gc FOREIGN KEY (r_table_name) REFERENCES geopackage_contents(table_name)
-  )
-```
-
-### 3	Tile Table Metadata
+### 2	Tile Table Metadata
 A GeoPackage SHALL contain a `tile_table_metadata` table or view as defined in this clause. The 
 `tile_table_metadata` table or view SHALL contain one row record describing each tile table in a 
 GeoPackage.  The `t_table_name` column value SHALL be a row value of `r_table_name` in the `raster_columns` 
@@ -110,6 +49,8 @@ Table or View Name: `tile_table_metadata`
 |-------------|-------------|--------------------|------|-------------|
 | t_table_name | text	| {RasterLayerName}{_tiles}	| no | PK |
 | is_times_two_zoom	| integer	| Zoom level pixel sizes vary by powers of 2 (0=false,1=true)	| no | 1 |
+| `srid` |	integer |	Spatial Reference System ID: spatial_ref_sys.srid |	no | | FK |
+
 
 **Table 4** - `tile_table_metadata` Table Definition SQL
 
