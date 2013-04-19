@@ -135,3 +135,36 @@ CREATE TABLE
 ```
 
 [[Note 14]] (implementation.md#note-14)
+
+###6  Raster metadata
+
+> Need to move raster specific stuff here, have it build on the tiles metadata.
+
+Extra info for rasters.
+
+
+
+[[Note 16]] (implementation.md#note-16)
+
+The `compr_qual_factor` column value indicates the image quality of that raster on a scale from 1 
+(lowest) to 100 (highest) for rasters compressed with a lossy compression algorithm. It is always 
+100 for rasters compressed with a lossless compression algorithm, or with no compression. A value 
+of -1 indicates "unknown" as is specified as the default value.  
+
+The `georectification` column value indicates whether or not that raster is georectified to an area 
+on the earth. A value of 0 indicates that the raster is not georectified. .  A value of -1 indicates 
+"unknown" as is specified as the default value.  A value of 1 indicates that the raster is georectified 
+(but not necessarily orthorectified). A value of 2 indicates that the raster is orthorectified (which 
+implies georectified) to accurately align with real world coordinates, have constant scale, and support 
+direct measurement of distances, angles, and areas
+
+For a georectified raster (i.e. georectification is 1 or 2), the `min_x`, `min_y`, `max_x` and `max_y` column 
+values define a bounding box that SHALL be the spatial extent of the area on the earth represented by the raster.  
+
+[[Note 17]] (implementation.md#note-17)
+
+|Column Name | Column Type | Column Description |  Null | Default | Key |
+|------------|-------------|--------------------|------|---------|-----|
+| r_raster_column |	text |	“tile_data” for a tiles table, or the name of a raster column for a rasters table	| no |	raster_column_name |	PK |
+| compr_qual_factor |	integer |	Compression quality factor: 1 (lowest) to 100 (highest) for lossy compression; always 100 for lossless or no compression, -1 if unknown. | no	| -1 | |
+| georectification |	integer |	Is the raster georectified; -1=unknown, 0=not georectified, 1=georectified, 2=orthorectified	| no |	-1 | |

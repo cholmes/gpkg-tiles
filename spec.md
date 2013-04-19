@@ -99,7 +99,7 @@ height at that level.
 
 |Column Name | Column Type | Column Description |	Null | Default | Key |
 |------------|-------------|--------------------|------|---------|-----|
-| `t_table_name` |	text |	{RasterLayerName}_tiles |no	| | PK, FK |
+| `t_table_name` |	text |	{TileLayerName}_tiles |no	| | PK, FK |
 | `zoom_level`	| integer |	0 <= `zoom_level` <= max_level for `t_table_name`	| no |	0 |	PK |
 | `matrix_width` |	integer |	Number of columns (>= 1) in tile matrix at this zoom level | no |	1 | |	
 | `matrix_height` |	integer |	Number of rows (>= 1) in tile matrix at this zoom level |	no | 1 | |	
@@ -169,48 +169,29 @@ CREATE TABLE
   )
 ```
 
-###6	Rasters or Tiles Table Metadata
+###6	Tiles Table Metadata
 
-There SHALL be a {Raster|Tile TableName}_rt_metadata table or view for each rasters or tiles table 
+There SHALL be a {Tile TableName}_rt_metadata table or view for each tiles table 
 in a GeoPackage defined with the columns described in table 40 below.  
 
 [[Note 15]] (implementation.md#note-15)
 
 The data in a row record in this table refers to the raster in the `r_raster_column` column in the 
-{Raster|Tile TableName}table for the record with a rowed equal to the `row_id_value` primary key column value. 
+{Tile TableName}table for the record with a rowed equal to the `row_id_value` primary key column value. 
 
-[[Note 16]] (implementation.md#note-16)
+The `min_x`, `min_y`, `max_x` and `max_y` column values define a bounding box that 
+SHALL be the spatial extent of the area on the earth represented by the raster.
 
-The `compr_qual_factor` column value indicates the image quality of that raster on a scale from 1 
-(lowest) to 100 (highest) for rasters compressed with a lossy compression algorithm. It is always 
-100 for rasters compressed with a lossless compression algorithm, or with no compression. A value 
-of -1 indicates "unknown" as is specified as the default value.  
-
-The `georectification` column value indicates whether or not that raster is georectified to an area 
-on the earth. A value of 0 indicates that the raster is not georectified. .  A value of -1 indicates 
-"unknown" as is specified as the default value.  A value of 1 indicates that the raster is georectified 
-(but not necessarily orthorectified). A value of 2 indicates that the raster is orthorectified (which 
-implies georectified) to accurately align with real world coordinates, have constant scale, and support 
-direct measurement of distances, angles, and areas
-
-For a georectified raster (i.e. georectification is 1 or 2), the `min_x`, `min_y`, `max_x` and `max_y` column 
-values define a bounding box that SHALL be the spatial extent of the area on the earth represented by the raster.  
-
-[[Note 17]] (implementation.md#note-17)
-
-**Table 11** - `{RasterLayerName}_rt_metadata`
-+ Table or View Name: `{RasterLayerName}_rt_metadata`
+**Table 11** - `{TileLayerName}_rt_metadata`
++ Table or View Name: `{TileLayerName}_rt_metadata`
 
 |Column Name | Column Type | Column Description |  Null | Default | Key |
 |------------|-------------|--------------------|------|---------|-----|
-| row_id_value |	integer |	rowid in rasters or tiles table |	no |	|	PK | 
-| r_raster_column |	text |	“tile_data” for a tiles table, or the name of a raster column for a rasters table	| no |	raster_column_name |	PK |
-| compr_qual_factor |	integer |	Compression quality factor: 1 (lowest) to 100 (highest) for lossy compression; always 100 for lossless or no compression, -1 if unknown. | no	| -1 | |
-| georectification |	integer |	Is the raster georectified; -1=unknown, 0=not georectified, 1=georectified, 2=orthorectified	| no |	-1 | |
-| min_x	| double |	In raster_columns.srid	| no |	-180.0	| |
-| min_y	| double	| In raster_columns.srid	| no	| -90.0	| |
-| max_x	| double	| In raster_columns.srid	| no	| 180.0	| |
-| max_y	| double	| In raster_columns.srid	| no	| 90.0	| |
+| row_id_value |	integer |	rowid in tiles table |	no |	|	PK | 
+| min_x	| double |	In tile_table_metadata.srid	| no |	-180.0	| |
+| min_y	| double	| In tile_table_metadata.srid	| no	| -90.0	| |
+| max_x	| double	| In tile_table_metadata.srid	| no	| 180.0	| |
+| max_y	| double	| In tile_table_metadata.srid	| no	| 90.0	| |
 
 **Table 12** - EXAMPLE: `{RasterLayerName}_rt_metadata` Table Definition SQL
 
