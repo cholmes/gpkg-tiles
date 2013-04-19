@@ -63,7 +63,7 @@ CREATE TABLE
   )
 ```
 
-### 4	Tile Matrix Metadata
+### 3	Tile Matrix Metadata
 A GeoPackage SHALL contain a `tile_matrix_metadata` table or view as defined in this clause.  
 The `tile_matrix_metadata` table or view SHALL contain one row record for each zoom level that 
 contains one or more tiles in each tiles table.  It may contain row records for zoom levels in 
@@ -94,7 +94,7 @@ height at that level.
 
 [[Note 7]] (implementation.md#note-7), [[Note 8]] (implementation.md#note-8), [[Note 9]] (implementation.md#note-9), and [[Note 10]] (implementation.md#note-10) 
 
-**Table 5** - `tile_matrix_metadata`
+**Table 4** - `tile_matrix_metadata`
 + Table or View Name: `tile_matrix_metadata`
 
 |Column Name | Column Type | Column Description |	Null | Default | Key |
@@ -108,7 +108,7 @@ height at that level.
 | `pixel_x_size` |	double |	In `t_table_name` srid units or default meters for srid 0 (>0) |	no |	1 | |
 | `pixel_y_size` |	double |	In `t_table_name` srid units or default meters for srid 0 (>0) |	no |	1	| |
 
-**Table 6** - `tile_matrix_metadata` Table Creation SQL
+**Table 5** - `tile_matrix_metadata` Table Creation SQL
 
 ```SQL
 CREATE TABLE
@@ -129,7 +129,7 @@ CREATE TABLE
 
 
 
-### 5	Tiles Table
+### 4	Tiles Table
 Tiles in a tile matrix set with one or more zoom levels SHALL be stored in a GeoPackage in a tiles 
 table or view with a unique name for every different tile matrix set in the GeoPackage.  Each tiles 
 table or view SHALL be defined with the columns described in table 35 below.  Each tiles table or 
@@ -179,7 +179,7 @@ CREATE TABLE
   )
 ```
 
-### 6 Raster Tables
+### 5 Raster Tables
 
 Raster tables have raster columns defined as BLOB data types that contain rasters that are not part
 of tile matrix sets.  Every table in a GeoPackage that is not a tiles tables as as described in 
@@ -217,7 +217,7 @@ CREATE TABLE
 
 [[Note 14]] (implementation.md#note-14)
 
-###7	Rasters or Tiles Table Metadata
+###6	Rasters or Tiles Table Metadata
 
 There SHALL be a {Raster|Tile TableName}_rt_metadata table or view for each rasters or tiles table 
 in a GeoPackage defined with the columns described in table 40 below.  
