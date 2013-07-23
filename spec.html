@@ -23,7 +23,9 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="GeoPackage 1 documentation" href="index.html" /> 
+    <link rel="top" title="GeoPackage 1 documentation" href="index.html" />
+    <link rel="next" title="Policies and Procedures for experimental use of GitHub by the GeoPackage SWG" href="process.html" />
+    <link rel="prev" title="Welcome to GeoPackage’s documentation!" href="index.html" /> 
   </head>
   <body>
     <div class="related">
@@ -32,6 +34,12 @@
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="process.html" title="Policies and Procedures for experimental use of GitHub by the GeoPackage SWG"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to GeoPackage’s documentation!"
+             accesskey="P">previous</a> |</li>
         <li><a href="index.html">GeoPackage 1 documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -44,12 +52,12 @@
   <div class="contents topic" id="contents">
 <p class="topic-title first">Contents</p>
 <ul class="simple">
-<li><a class="reference internal" href="#geopackage-tiles-specification" id="id1">GeoPackage Tiles Specification</a><ul>
-<li><a class="reference internal" href="#preamble" id="id2">Preamble</a><ul>
-<li><a class="reference internal" href="#tile-tables" id="id3">6.3.5 Tile Tables</a></li>
-<li><a class="reference internal" href="#tile-matrix-metadata" id="id4">6.3.5.2 Tile Matrix Metadata</a></li>
-<li><a class="reference internal" href="#tiles-matrix-data-tables" id="id5">6.3.6.3 Tiles Matrix Data Tables</a></li>
-<li><a class="reference internal" href="#annex-b" id="id6">Annex B</a></li>
+<li><a class="reference internal" href="#geopackage-tiles-specification" id="id7">GeoPackage Tiles Specification</a><ul>
+<li><a class="reference internal" href="#preamble" id="id8">Preamble</a><ul>
+<li><a class="reference internal" href="#tile-tables" id="id9">6.3.5 Tile Tables</a></li>
+<li><a class="reference internal" href="#tile-matrix-metadata" id="id10">6.3.5.2 Tile Matrix Metadata</a></li>
+<li><a class="reference internal" href="#tiles-matrix-data-tables" id="id11">6.3.6.3 Tiles Matrix Data Tables</a></li>
+<li><a class="reference internal" href="#annex-b" id="id12">Annex B</a></li>
 </ul>
 </li>
 </ul>
@@ -57,9 +65,9 @@
 </ul>
 </div>
 <div class="section" id="geopackage-tiles-specification">
-<h1><a class="toc-backref" href="#id1">GeoPackage Tiles Specification</a><a class="headerlink" href="#geopackage-tiles-specification" title="Permalink to this headline">¶</a></h1>
+<h1><a class="toc-backref" href="#id7">GeoPackage Tiles Specification</a><a class="headerlink" href="#geopackage-tiles-specification" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="preamble">
-<h2><a class="toc-backref" href="#id2">Preamble</a><a class="headerlink" href="#preamble" title="Permalink to this headline">¶</a></h2>
+<h2><a class="toc-backref" href="#id8">Preamble</a><a class="headerlink" href="#preamble" title="Permalink to this headline">¶</a></h2>
 <p>The following GitHub document has been extracted from the OGC GeoPackage
 candidate standard current working draft, and is a revision of the
 earlier (January) draft released for public comment. This is an open
@@ -72,7 +80,7 @@ contributions, if accepted by the OGC Membership, shall be incorporated
 into the formal OGC GeoPackage standards document and that all copyright
 and intellectual property shall be vested to the OGC.</p>
 <div class="section" id="tile-tables">
-<h3><a class="toc-backref" href="#id3">6.3.5 Tile Tables</a><a class="headerlink" href="#tile-tables" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id9">6.3.5 Tile Tables</a><a class="headerlink" href="#tile-tables" title="Permalink to this headline">¶</a></h3>
 <p>The Tile table model and conventions described below support direct use
 of tiles in a GeoPackage in two ways. First, they specify how existing
 applications may create SQL Views of the data /metadata model on top of
@@ -99,16 +107,48 @@ describing each tile table in a GeoPackage. The <tt class="docutils literal"><sp
 value SHALL be a row value of <tt class="docutils literal"><span class="pre">r_table_name</span></tt> in the <tt class="docutils literal"><span class="pre">raster_columns</span></tt>
 table, enforced by a trigger. The <tt class="docutils literal"><span class="pre">is_times_two_zoom</span></tt> column value
 SHALL be 1 if zoom level pixel sizes vary by powers of 2 between
-adjacent zoom levels in the corresponding tile table, or 0 if not.</p>
-<p><a class="reference external" href="#note-4">[Note 4]</a> (#note-4) and <a class="reference external" href="#note-5">[Note 5]</a> (#note-5)</p>
+adjacent zoom levels in the corresponding tile table, or 0 if not  <a class="footnote-reference" href="#id4" id="id1">[1]</a></p>
+<blockquote>
+<div><a class="footnote-reference" href="#id5" id="id2">[2]</a>.</div></blockquote>
 <p><strong>Table 11</strong> - <tt class="docutils literal"><span class="pre">tile_table_metadata</span></tt> Table or View Name:
 <tt class="docutils literal"><span class="pre">tile_table_metadata</span></tt></p>
-<p>See Annex B: [Table Definition SQL clause B.9] (#clause-B9) -
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="12%" />
+<col width="50%" />
+<col width="6%" />
+<col width="12%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Column Name</th>
+<th class="head">Column Type</th>
+<th class="head">Column Description</th>
+<th class="head">Null</th>
+<th class="head">Default Key</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>t_table_name</td>
+<td>text</td>
+<td><tt class="docutils literal"><span class="pre">RasterLayerName</span></tt>_tiles</td>
+<td>no</td>
+<td>PK</td>
+</tr>
+<tr class="row-odd"><td>is_times_two_zoom</td>
+<td>integer</td>
+<td>Zoom level pixel sizes vary by powers of 2 (0=false,1=true)</td>
+<td>no</td>
+<td>1</td>
+</tr>
+</tbody>
+</table>
+<p>See Annex B: <a class="reference external" href="#clause-B9">Table Definition SQL clause B.9</a> -
 <tt class="docutils literal"><span class="pre">tile_table_metadata</span></tt></p>
 </div>
 </div>
 <div class="section" id="tile-matrix-metadata">
-<h3><a class="toc-backref" href="#id4">6.3.5.2 Tile Matrix Metadata</a><a class="headerlink" href="#tile-matrix-metadata" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id10">6.3.5.2 Tile Matrix Metadata</a><a class="headerlink" href="#tile-matrix-metadata" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p>Requirement 14 /gpkg/1.0/req/core/ tile_matrix_metadata_table:</p>
 <p>A GeoPackage SHALL contain a tile_matrix_metadata table as defined
@@ -117,8 +157,7 @@ in tables 12 and xx and specified in clause 6.3.5.2.</p>
 <p>The <tt class="docutils literal"><span class="pre">tile_matrix_metadata</span></tt> table or view SHALL contain one row record
 for each zoom level that contains one or more tiles in each tiles table.
 It may contain row records for zoom levels in a tiles table that do not
-contain tiles.</p>
-<p><a class="reference external" href="#note-3">[Note 3]</a> (#note-3)</p>
+contain tiles [3]_.</p>
 <p>The <tt class="docutils literal"><span class="pre">tile_matrix_metadata</span></tt> table documents the structure of the tile
 matrix at each zoom level in each tiles table. It allows GeoPackages to
 contain rectangular as well as square tiles (e.g. for better
@@ -128,15 +167,14 @@ regular intervals other than powers of 2. When the value of the
 <tt class="docutils literal"><span class="pre">is_times_two_zoom</span></tt> column in the <tt class="docutils literal"><span class="pre">tile_table_metadata</span></tt> record for a
 tiles table is 1 (true) then the pixel sizes for adjacent zoom levels in
 the <tt class="docutils literal"><span class="pre">tile_matrix_metadata</span></tt> table for that table SHALL only vary by
-powers of 2.</p>
-<p><a class="reference external" href="#note-6">[Note 6]</a> (#note-6)</p>
+powers of 2  <a class="footnote-reference" href="#id6" id="id3">[3]</a>.</p>
 <p>GeoPackages SHALL follow the most frequently used conventions of a tile
 origin at the upper left and a zoom-out-level of 0 for the smallest map
-scale “whole world” zoom level view, as specified by [WMTS]
-(<a class="reference external" href="http://portal.opengeospatial.org/files/?artifact_id=35326">http://portal.opengeospatial.org/files/?artifact_id=35326</a>). The tile
-coordinate (0,0) SHALL always refer to the tile in the upper left corner
-of the tile matrix at any zoom level, regardless of the actual
-availability of that tile. Pixel sizes for zoom levels sorted in
+scale “whole world” zoom level view, as specified by
+<a class="reference external" href="http://portal.opengeospatial.org/files/?artifact_id=35326">WMTS</a>.
+The tile coordinate (0,0) SHALL always refer to the tile in the upper
+left corner of the tile matrix at any zoom level, regardless of the
+actual availability of that tile. Pixel sizes for zoom levels sorted in
 ascending order SHALL be sorted in descending order.</p>
 <p>GeoPackages SHALL not require that tiles be provided for level 0 or any
 other particular zoom level. This means that a tile matrix set can be
@@ -152,12 +190,12 @@ level.</p>
 <tt class="docutils literal"><span class="pre">tile_matrix_metadata</span></tt></p>
 <table border="1" class="docutils">
 <colgroup>
+<col width="16%" />
 <col width="11%" />
-<col width="8%" />
-<col width="69%" />
-<col width="4%" />
+<col width="51%" />
 <col width="6%" />
-<col width="4%" />
+<col width="8%" />
+<col width="8%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Column Name</th>
@@ -171,47 +209,54 @@ level.</p>
 <tbody valign="top">
 <tr class="row-even"><td><tt class="docutils literal"><span class="pre">t_table_name</span></tt></td>
 <td>text</td>
-<td>{RasterLayerName}*tiles |no | | PK, FK | | <tt class="docutils literal"><span class="pre">zoom_level</span></tt> | integer | 0 &lt;= <tt class="docutils literal"><span class="pre">zoom_level</span></tt> &lt;= max*level for <tt class="docutils literal"><span class="pre">t_table_name</span></tt></td>
+<td>{RasterLayerName}_tiles</td>
+<td>no</td>
+<td>&nbsp;</td>
+<td>PK, FK</td>
+</tr>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">zoom_level</span></tt></td>
+<td>integer</td>
+<td>0 &lt;= <tt class="docutils literal"><span class="pre">zoom_level</span></tt> &lt;= max_level for <tt class="docutils literal"><span class="pre">t_table_name</span></tt></td>
 <td>no</td>
 <td>0</td>
 <td>PK</td>
 </tr>
-<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">matrix_width</span></tt></td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">matrix_width</span></tt></td>
 <td>integer</td>
 <td>Number of columns (&gt;= 1) in tile matrix at this zoom level</td>
 <td>no</td>
 <td>1</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-even"><td><tt class="docutils literal"><span class="pre">matrix_height</span></tt></td>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">matrix_height</span></tt></td>
 <td>integer</td>
 <td>Number of rows (&gt;= 1) in tile matrix at this zoom level</td>
 <td>no</td>
 <td>1</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">tile_width</span></tt></td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">tile_width</span></tt></td>
 <td>integer</td>
 <td>Tile width in pixels (&gt;= 1)for this zoom level</td>
 <td>no</td>
 <td>256</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-even"><td><tt class="docutils literal"><span class="pre">tile_height</span></tt></td>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">tile_height</span></tt></td>
 <td>integer</td>
 <td>Tile height in pixels (&gt;= 1) for this zoom level</td>
 <td>no</td>
 <td>256</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">pixel_x_size</span></tt></td>
+<tr class="row-even"><td><tt class="docutils literal"><span class="pre">pixel_x_size</span></tt></td>
 <td>double</td>
 <td>In <tt class="docutils literal"><span class="pre">t_table_name</span></tt> srid units or default meters for srid 0 (&gt;0)</td>
 <td>no</td>
 <td>1</td>
 <td>&nbsp;</td>
 </tr>
-<tr class="row-even"><td><tt class="docutils literal"><span class="pre">pixel_y_size</span></tt></td>
+<tr class="row-odd"><td><tt class="docutils literal"><span class="pre">pixel_y_size</span></tt></td>
 <td>double</td>
 <td>In <tt class="docutils literal"><span class="pre">t_table_name</span></tt> srid units or default meters for srid 0 (&gt;0)</td>
 <td>no</td>
@@ -224,7 +269,7 @@ level.</p>
 <tt class="docutils literal"><span class="pre">tile_matrix_metadata</span></tt></p>
 </div>
 <div class="section" id="tiles-matrix-data-tables">
-<h3><a class="toc-backref" href="#id5">6.3.6.3 Tiles Matrix Data Tables</a><a class="headerlink" href="#tiles-matrix-data-tables" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id11">6.3.6.3 Tiles Matrix Data Tables</a><a class="headerlink" href="#tiles-matrix-data-tables" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><p><strong>Requirement 20</strong> /gpkg/1.0/req/core/tiles_table</p>
 <p>All tile matrix sets in a GeoPackage SHALL be contained in tiles
@@ -325,8 +370,15 @@ table</p>
 <tt class="docutils literal"><span class="pre">sample_matrix_tiles</span></tt></p>
 </div>
 <div class="section" id="annex-b">
-<h3><a class="toc-backref" href="#id6">Annex B</a><a class="headerlink" href="#annex-b" title="Permalink to this headline">¶</a></h3>
+<h3><a class="toc-backref" href="#id12">Annex B</a><a class="headerlink" href="#annex-b" title="Permalink to this headline">¶</a></h3>
 <p><strong>Table 2</strong> - <tt class="docutils literal"><span class="pre">tile_table_metadata</span></tt> Table Definition SQL</p>
+<div class="highlight-python"><pre>CREATE TABLE
+  tile_table_metadata
+  (
+    t_table_name TEXT NOT NULL PRIMARY KEY,
+    is_times_two_zoom INTEGER NOT NULL DEFAULT 1
+  )</pre>
+</div>
 <p>Clause B.10</p>
 <p><strong>Table 3</strong> - <tt class="docutils literal"><span class="pre">tile_matrix_metadata</span></tt> Table Creation SQL</p>
 <p><strong>Table 4</strong> - EXAMPLE: <tt class="docutils literal"><span class="pre">sample_matrix_tiles</span></tt> Table Definition SQL</p>
@@ -339,30 +391,6 @@ corresponding tiles table if there are triggers on that table as
 specified in clause 7.3.5.x below that reference
 <tt class="docutils literal"><span class="pre">tile_matrix_metadata</span></tt> column values for that zoom level to reject
 invalid data</p>
-<p>[Note 4]</p>
-<p>A row record for a tile table must be inserted into this table before
-row records can be inserted into the tile_matrix_metadata table
-described in clause 10.4 due to the presence of foreign key and other
-integrity constraints on that table.</p>
-<p>[Note 5]</p>
-<p>GeoPackage applications that insert, update, or delete tiles (matrix
-set) table tiles row records are responsible for maintaining the
-corresponding descriptive contents of the tile_table_metadata table.</p>
-<p>[Note 6]</p>
-<p>Most tile pyramids have an origin at the upper left, a convention
-adopted by the OGC [Web Map Tile Service (WMTS)]
-(<a class="reference external" href="http://portal.opengeospatial.org/files/?artifact_id=35326">http://portal.opengeospatial.org/files/?artifact_id=35326</a>), but some
-such as [TMS]
-(<a class="reference external" href="http://wiki.osgeo.org/wiki/Tile_Map_Service_Specification">http://wiki.osgeo.org/wiki/Tile_Map_Service_Specification</a>) used by
-[MB-Tiles] (<a class="reference external" href="https://github.com/mapbox/mbtiles-spec">https://github.com/mapbox/mbtiles-spec</a>) have an origin at
-the lower left. Most tile pyramids, such as [Open Street Map]
-(<a class="reference external" href="http://wiki.openstreetmap.org/wiki/Main_Page">http://wiki.openstreetmap.org/wiki/Main_Page</a>), [OSMDroidAtlas]
-(<a class="reference external" href="http://wiki.openstreetmap.org/wiki/Main_Page">http://wiki.openstreetmap.org/wiki/Main_Page</a>), and [FalconView]
-(<a class="reference external" href="http://www.falconview.org/trac/FalconView">http://www.falconview.org/trac/FalconView</a>) use a zoom_out_level of 0
-for the smallest map scale “whole world” zoom level view, another
-convention adopted by WMTS, but some such as [Big Planet Tracks]
-(<a class="reference external" href="http://code.google.com/p/big-planet-tracks/">http://code.google.com/p/big-planet-tracks/</a>) invert this convention and
-use 0 or 1 for the largest map scale “local detail” zoom level view.</p>
 <p>[Note 7]</p>
 <p>GeoPackage applications may query the <tt class="docutils literal"><span class="pre">tile_matrix_metadata</span></tt> table or
 the tiles (matrix set) table specified in clause 10.7 below to determine
@@ -420,6 +448,44 @@ Version 2.0, 2001-10-26 <a class="reference external" href="https://nsgreg.nga.m
 | OGC08-131r3 The Specification Model — A Standard for Modular
 specifications
 <a class="reference external" href="https://portal.opengeospatial.org/files/?artifact_id=34762">https://portal.opengeospatial.org/files/?artifact_id=34762</a></p>
+<table class="docutils footnote" frame="void" id="id4" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id1">[1]</a></td><td>A row record for a tile table must be inserted into this table before
+row records can be inserted into the tile_matrix_metadata table
+described in clause 10.4 due to the presence of foreign key and other
+integrity constraints on that table.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id5" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id2">[2]</a></td><td>GeoPackage applications that insert, update, or delete tiles (matrix
+set) table tiles row records are responsible for maintaining the
+corresponding descriptive contents of the tile_table_metadata
+table.</td></tr>
+</tbody>
+</table>
+<table class="docutils footnote" frame="void" id="id6" rules="none">
+<colgroup><col class="label" /><col /></colgroup>
+<tbody valign="top">
+<tr><td class="label"><a class="fn-backref" href="#id3">[3]</a></td><td>Most tile pyramids have an origin at the upper left, a convention
+adopted by the OGC <a class="reference external" href="http://portal.opengeospatial.org/files/?artifact_id=35326">Web Map Tile Service
+(WMTS)</a>,
+but some such as
+<a class="reference external" href="http://wiki.osgeo.org/wiki/Tile_Map_Service_Specification">TMS</a>
+used by <a class="reference external" href="https://github.com/mapbox/mbtiles-spec">MB-Tiles</a> have an
+origin at the lower left. Most tile pyramids, such as <a class="reference external" href="http://wiki.openstreetmap.org/wiki/Main_Page">Open Street
+Map</a>,
+<a class="reference external" href="http://wiki.openstreetmap.org/wiki/Main_Page">OSMDroidAtlas</a>, and
+<a class="reference external" href="http://www.falconview.org/trac/FalconView">FalconView</a> use a
+zoom_out_level of 0 for the smallest map scale “whole world” zoom
+level view, another convention adopted by WMTS, but some such as <a class="reference external" href="http://code.google.com/p/big-planet-tracks/">Big
+Planet Tracks</a> invert
+this convention and use 0 or 1 for the largest map scale “local
+detail” zoom level view.</td></tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
@@ -452,6 +518,12 @@ specifications
 </li>
 </ul>
 
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Welcome to GeoPackage&#8217;s documentation!</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="process.html"
+                        title="next chapter">Policies and Procedures for experimental use of GitHub by the GeoPackage SWG</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/spec.txt"
@@ -480,6 +552,12 @@ specifications
         <li class="right" style="margin-right: 10px">
           <a href="genindex.html" title="General Index"
              >index</a></li>
+        <li class="right" >
+          <a href="process.html" title="Policies and Procedures for experimental use of GitHub by the GeoPackage SWG"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Welcome to GeoPackage’s documentation!"
+             >previous</a> |</li>
         <li><a href="index.html">GeoPackage 1 documentation</a> &raquo;</li> 
       </ul>
     </div>
