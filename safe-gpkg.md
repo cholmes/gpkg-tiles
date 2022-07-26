@@ -1,6 +1,6 @@
 # Safe GeoPackage Tiles
 
-### Introduction
+## Introduction
 
 This file will eventually be a complementary specification to the GeoPackage Tiles
 Specification, that has the triggers and table creation SQL to create a GeoPackage
@@ -30,7 +30,7 @@ CREATE TRIGGER 'raster_columns_r_raster_column_insert'
         WHERE NEW.r_raster_column <> lower(NEW.r_raster_column);
     END
 
-CREATE TRIGGER 'raster_columns_r_raster_column_update' 
+CREATE TRIGGER 'raster_columns_r_raster_column_update'
   BEFORE UPDATE OF r_raster_column ON 'raster_columns'
     FOR EACH ROW
     BEGIN
@@ -48,7 +48,7 @@ CREATE TRIGGER 'raster_columns_georectification_insert'
     BEGIN
       SELECT RAISE(ROLLBACK, 'insert on table ''raster_columns'' violates constraint: georectification must be -1, 0, 1 or 2')
         WHERE (NOT (NEW.georectification IN (-1, 0, 1, 2)));
-    END 
+    END
 
 CREATE TRIGGER 'raster_columns_georectification_update'
   BEFORE UPDATE OF georectification ON 'raster_columns'
@@ -58,7 +58,7 @@ CREATE TRIGGER 'raster_columns_georectification_update'
         WHERE (NOT (NEW.georectification IN (-1, 0, 1, 2)));
     END
 
-CREATE TRIGGER 'raster_columns_compr_qual_factor_insert' 
+CREATE TRIGGER 'raster_columns_compr_qual_factor_insert'
   BEFORE INSERT ON 'raster_columns'
     FOR EACH ROW
     BEGIN
@@ -70,7 +70,7 @@ CREATE TRIGGER 'raster_columns_compr_qual_factor_insert'
         WHERE NEW.compr_qual_factor > 100;
     END
 
-CREATE TRIGGER 'raster_columns_compr_qual_factor_update' 
+CREATE TRIGGER 'raster_columns_compr_qual_factor_update'
   BEFORE UPDATE OF compr_qual_factor ON 'raster_columns'
     FOR EACH ROW
     BEGIN
@@ -89,13 +89,12 @@ CREATE TRIGGER 'raster_columns_compr_qual_factor_update'
 INSERT INTO raster_columns VALUES ("sample_matrix_tiles", "tile_data", 90, 2, 4326)
 ```
 
--
 ### 2.0 tile_table_metadata SQL
 
 **Table 2.1** - `tile_table_metadata` Trigger Definition SQL
 
 ```SQL
-CREATE TRIGGER 'tile_table_metadata_t_table_name_insert' 
+CREATE TRIGGER 'tile_table_metadata_t_table_name_insert'
   BEFORE INSERT ON 'tile_table_metadata'
     FOR EACH ROW
     BEGIN
@@ -103,7 +102,7 @@ CREATE TRIGGER 'tile_table_metadata_t_table_name_insert'
         WHERE NOT (NEW.t_table_name IN (SELECT DISTINCT r_table_name FROM raster_columns));
     END
 
-CREATE TRIGGER 'tile_table_metadata_t_table_name_update' 
+CREATE TRIGGER 'tile_table_metadata_t_table_name_update'
   BEFORE UPDATE OF t_table_name ON 'tile_table_metadata'
     FOR EACH ROW
     BEGIN
@@ -111,15 +110,15 @@ CREATE TRIGGER 'tile_table_metadata_t_table_name_update'
         WHERE NOT (NEW.t_table_name IN (SELECT DISTINCT r_table_name FROM raster_columns));
     END
 
-CREATE TRIGGER 'tile_table_metadata_is_times_two_zoom_insert' 
+CREATE TRIGGER 'tile_table_metadata_is_times_two_zoom_insert'
   BEFORE INSERT ON 'tile_table_metadata'
     FOR EACH ROW
     BEGIN
       SELECT RAISE(ROLLBACK, 'insert on tile_table_metadata violates constraint: is_time_two_zoom must be one of 0|1')
         WHERE NOT(NEW.is_times_two_zoom IN (0,1));
     END
-  
-CREATE TRIGGER 'tile_table_metadata_is_times_two_zoom_update' 
+
+CREATE TRIGGER 'tile_table_metadata_is_times_two_zoom_update'
   BEFORE UPDATE OF is_times_two_zoom ON 'tile_table_metadata'
     FOR EACH ROW
     BEGIN
@@ -134,7 +133,6 @@ CREATE TRIGGER 'tile_table_metadata_is_times_two_zoom_update'
 INSERT INTO tile_table_metadata VALUES ("sample_matrix_tiles", 1);
 ```
 
--
 ### 3.0 tile_matrix_metadata SQL
 
 **Table 3.1** - `tile_matrix_metadata` Trigger Definition SQL
@@ -227,7 +225,6 @@ CREATE TRIGGER 'tile_matrix_metadata_pixel_y_size_update'
 INSERT INTO tile_matrix_metadata VALUES ("sample_matrix_tiles", 0, 1, 1, 512, 512, 2.0, 2.0)
 ```
 
--
 ### 4.0 sample_matrix_tiles SQL
 
 **Table 4.1** – EXAMPLE: `sample_matrix_tiles` Trigger Definition SQL
@@ -292,13 +289,13 @@ CREATE TRIGGER "sample_matrix_tiles_tile_row_update"
         WHERE NOT (NEW.tile_row < (SELECT matrix_height FROM tile_matrix_metadata WHERE t_table_name = 'sample_matrix_tiles' AND zoom_level = NEW.zoom_level));
     END
 ```
- 
+
 **Table 4.2** - EXAMPLE:  `sample_matrix_tiles` Insert Statement
 
 ```SQL
 INSERT INTO sample_matrix_tiles VALUES (1, 1, 1, 1, "BLOB VALUE")
 ```
--
+
 ### 5.0 sample_rasters SQL
 
 **Table 5.1** - EXAMPLE: `sample_rasters` Insert Statement
@@ -307,7 +304,6 @@ INSERT INTO sample_matrix_tiles VALUES (1, 1, 1, 1, "BLOB VALUE")
 INSERT INTO sample_rasters VALUES (1, {Elevation Raster}, 'rough terrain', {Area Photo} )
 ```
 
--
 ### 6.0 {RasterLayerName}_rt_metadata SQL
 
 **Table 6.1** - EXAMPLE: `{RasterLayerName}_rt_metadata` Trigger Definition SQL
@@ -348,7 +344,7 @@ CREATE TRIGGER 'sample_rasters_rt_metadata_georectification_update'
         WHERE (NOT (NEW.georectification IN (-1, 0, 1, 2)));
     END
 
-CREATE TRIGGER 'sample_rasters_rt_metadata_compr_qual_factor_insert' 
+CREATE TRIGGER 'sample_rasters_rt_metadata_compr_qual_factor_insert'
   BEFORE INSERT ON 'sample_rasters_rt_metadata'
     FOR EACH ROW
     BEGIN
@@ -360,7 +356,7 @@ CREATE TRIGGER 'sample_rasters_rt_metadata_compr_qual_factor_insert'
         WHERE NEW.compr_qual_factor > 100;
     END
 
-CREATE TRIGGER 'sample_rasters_rt_metadata_compr_qual_factor_update' 
+CREATE TRIGGER 'sample_rasters_rt_metadata_compr_qual_factor_update'
   BEFORE UPDATE OF compr_qual_factor ON 'sample_rasters_rt_metadata'
     FOR EACH ROW
     BEGIN
@@ -372,7 +368,7 @@ CREATE TRIGGER 'sample_rasters_rt_metadata_compr_qual_factor_update'
         WHERE NEW.compr_qual_factor > 100;
     END
 
-CREATE TRIGGER 'sample_rasters_rt_metadata_row_id_value_insert' 
+CREATE TRIGGER 'sample_rasters_rt_metadata_row_id_value_insert'
   BEFORE INSERT ON 'sample_rasters_rt_metadata'
     FOR EACH ROW
     BEGIN
@@ -380,7 +376,7 @@ CREATE TRIGGER 'sample_rasters_rt_metadata_row_id_value_insert'
         WHERE NOT EXISTS (SELECT rowid FROM 'sample_rasters' WHERE rowid = NEW.row_id_value);
     END
 
-CREATE TRIGGER 'sample_rasters_rt_metadata_row_id_value_update' 
+CREATE TRIGGER 'sample_rasters_rt_metadata_row_id_value_update'
   BEFORE UPDATE OF 'row_id_value' ON 'sample_rasters_rt_metadata'
     FOR EACH ROW
     BEGIN

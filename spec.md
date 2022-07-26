@@ -30,19 +30,19 @@ all of the stored images. Applications that store GeoPackage raster and tile dat
 presumed to have this information available, SHALL store sufficient metadata to enable its 
 intended use. 
 
-Following a convention used by [MBTiles] (https://github.com/mapbox/mbtiles-spec), the Raster
+Following a convention used by [MBTiles](https://github.com/mapbox/mbtiles-spec), the Raster
 / Tile Store data model may be implemented directly as SQL tables in a SQLite database for 
 maximum performance, or as SQL views on top of tables in an existing SQLite Raster / Tile store
 for maximum adaptability and loose coupling to enable widespread implementation. A GeoPackage 
 can store multiple raster and tile pyramid data sets in different tables or views in the same 
-container. Following a convention used by [RasterLite] (https://www.gaia-gis.it/fossil/librasterlite/index), 
+container. Following a convention used by [RasterLite](https://www.gaia-gis.it/fossil/librasterlite/index), 
 tables or views containing record-level metadata are named with a raster or tile table name prefix and 
-a “_rt_metadata” suffix, e.g. {RasterTableName}{_rt_metadata.  
+a “_rt_metadata” suffix, e.g. {RasterTableName}_rt_metadata.  
 
 The tables or views that implement the GeoPackage Raster / Tile Store data / metadata model are described 
 and discussed individually in the following subsections.
 
-[[Note 1]] (#note-1)
+[[Note 1]](#note-1)
 
 ### 10.2	Raster Columns
 A GeoPackage SHALL contain a `raster_columns` table or view as defined in this clause.  The `raster_columns` 
@@ -66,11 +66,11 @@ The srid SHALL have a value contained in the `spatial_ref_sys` table defined in 
 
 All GeoPackages SHALL support image/png and image/jpeg formats for rasters and tiles. GeoPackages may 
 support image/x-webp and image/tiff formats for rasters and tiles. GeoPackage support for the image/tiff 
-format [[31]] (#31) is limited to GeoTIFF [[32]] (#32) images that meet the requirements of the NGA 
-Implementation Profile [[33]] (#33) for coordinate transformation case 3 where the position and scale of 
+format [[31]](#31) is limited to GeoTIFF [[32]](#32) images that meet the requirements of the NGA 
+Implementation Profile [[33]](#33) for coordinate transformation case 3 where the position and scale of 
 the data is known exactly, and no rotation of the image is required.
 
-[[Note 2]] (#note-2) and [[Note 3]] (#note-3)
+[[Note 2]](#note-2) and [[Note 3]](#note-3)
 
 **Table 21** - `raster_columns` 
 
@@ -108,14 +108,14 @@ GeoPackage.  The `t_table_name` column value SHALL be a row value of `r_table_na
 table, enforced by a trigger.  The `is_times_two_zoom` column value SHALL be 1 if zoom level pixel sizes 
 vary by powers of 2 between adjacent zoom levels in the corresponding tile table, or 0 if not.
 
-[[Note 4]] (#note-4) and [[Note 5]] (#note-5)
+[[Note 4]](#note-4) and [[Note 5]](#note-5)
 
 **Table 25** - `tile_table_metadata`
 Table or View Name: `tile_table_metadata`
 
 | Column Name | Column Type	| Column Description | Null	| Default	Key |
 |-------------|-------------|--------------------|------|-------------|
-| t_table_name | text	| {RasterLayerName}{_tiles}	| no | PK |
+| t_table_name | text	| {RasterLayerName}_tiles	| no | PK |
 | is_times_two_zoom	| integer	| Zoom level pixel sizes vary by powers of 2 (0=false,1=true)	| no | 1 |
 
 **Table 2** - `tile_table_metadata` Table Definition SQL
@@ -146,11 +146,11 @@ When the value of the `is_times_two_zoom` column in the `tile_table_metadata` re
 table is 1 (true) then the pixel sizes for adjacent zoom levels in the `tile_matrix_metadata` table 
 for that table SHALL only vary by powers of 2.
 
-[[Note 6]] (#note-6)  
+[[Note 6]](#note-6)  
 
 GeoPackages SHALL follow the most frequently used conventions of a tile origin at the upper left and
 a zoom-out-level of 0 for the smallest map scale “whole world” zoom level view, as specified by 
-[WMTS] (http://portal.opengeospatial.org/files/?artifact_id=35326). The tile coordinate (0,0) 
+[WMTS](http://portal.opengeospatial.org/files/?artifact_id=35326). The tile coordinate (0,0) 
 SHALL always refer to the tile in the upper left corner of the tile matrix at any zoom level, 
 regardless of the actual availability of that tile.  Pixel sizes for zoom levels sorted in ascending 
 order SHALL be sorted in descending order.  
@@ -161,7 +161,7 @@ at a certain tile zoom level. This does not affect the spatial extent stated by 
 values in the `geopackage_contents` record for the same `t_table_name`, or the tile matrix width and 
 height at that level.
 
-[[Note 7]] (#note-7), [[Note 8]] (#note-8), [[Note 9]] (#note-9), and [[Note 10]] (#note-10) 
+[[Note 7]](#note-7), [[Note 8]](#note-8), [[Note 9]](#note-9), and [[Note 10]](#note-10) 
 
 **Table 29** - `tile_matrix_metadata`
 + Table or View Name: `tile_matrix_metadata`
@@ -210,7 +210,7 @@ When the value of the `is_times_two_zoom` column in the `tile_table_metadata` re
 table row is 1 (true) then the pixel sizes for adjacent zoom levels in the tiles table SHALL only 
 vary by powers of 2.
 
-[[Note 11]] (#note-11) and [[Note 12]] (#note-12)
+[[Note 11]](#note-11) and [[Note 12]](#note-12)
 
 GeoPackages SHALL implement appropriate SQL triggers on each tiles table by executing the 
 `add_tile_triggers()` routine specified in clause 10.8 below with the tiles table as a parameter 
@@ -259,7 +259,7 @@ to raster columns.
 Every raster table in a GeoPackage shall have a primary key defined on one or more columns so that row
 level metadata records may be linked to the rasters in it by rowid as described in clauses 10.7 and 11.3 below.
 
-[[Note 13]] (#note-13)
+[[Note 13]](#note-13)
 
 **Table 39** - EXAMPLE: `sample_rasters` Table or View
 + Table or View Name: {TilesTableName} `sample_rasters`
@@ -284,19 +284,19 @@ CREATE TABLE
   )
 ```
 
-[[Note 14]] (#note-14)
+[[Note 14]](#note-14)
 
-###10.7	Rasters or Tiles Table Metadata
+### 10.7	Rasters or Tiles Table Metadata
 
 There SHALL be a {Raster|Tile TableName}_rt_metadata table or view for each rasters or tiles table 
 in a GeoPackage defined with the columns described in table 40 below.  
 
-[[Note 15]] (#note-15)
+[[Note 15]](#note-15)
 
 The data in a row record in this table refers to the raster in the `r_raster_column` column in the 
 {Raster|Tile TableName}table for the record with a rowed equal to the `row_id_value` primary key column value. 
 
-[[Note 16]] (#note-16)
+[[Note 16]](#note-16)
 
 The `compr_qual_factor` column value indicates the image quality of that raster on a scale from 1 
 (lowest) to 100 (highest) for rasters compressed with a lossy compression algorithm. It is always 
@@ -313,7 +313,7 @@ direct measurement of distances, angles, and areas
 For a georectified raster (i.e. georectification is 1 or 2), the `min_x`, `min_y`, `max_x` and `max_y` column 
 values define a bounding box that SHALL be the spatial extent of the area on the earth represented by the raster.  
 
-[[Note 17]] (#note-17)
+[[Note 17]](#note-17)
 
 **Table 40** - `{RasterLayerName}_rt_metadata`
 + Table or View Name: `{RasterLayerName}_rt_metadata`
@@ -348,10 +348,10 @@ CREATE TABLE
 ```
 
 
-####Implementation Notes
+#### Implementation Notes
 
 
-######[Note 1]
+###### [Note 1]
 
 Images of multiple MIME types may be stored in given table.  For example, in a tiles table, image/png 
 format tiles without compression could be used for transparency where there is no data on the tile edges, and 
@@ -359,108 +359,108 @@ image/jpeg format tiles with compression could be used for storage efficiency wh
 pixels.  Images of multiple bit depths of the same MIME type may also be stored in a given table, for example 
 image/png tiles in both 8 and 24 bit depths.
 
-######[Note 2]
+###### [Note 2]
 
 A feature type may be defined to have 0..n raster attributes, so the corresponding feature 
 table may contain from 0..n raster columns.
 
-######[Note 3]
+###### [Note 3]
 
  A raster tile layer table has only one raster column named `tile_data`.
 
-######[Note 4]
+###### [Note 4]
 
 A row record for a tile table must be inserted into this table before row records can be inserted 
 into the tile_matrix_metadata table described in clause 10.4 due to the presence of foreign key and other 
 integrity constraints on that table.
 
-######[Note 5]
+###### [Note 5]
 
 GeoPackage applications that insert, update, or delete tiles (matrix set) table tiles row records 
 are responsible for maintaining the corresponding descriptive contents of the tile_table_metadata table.
 
-######[Note 6]
+###### [Note 6]
 
 Most tile pyramids have an origin at the upper left, a convention adopted by the 
-OGC [Web Map Tile Service (WMTS)] (http://portal.opengeospatial.org/files/?artifact_id=35326), 
-but some such as [TMS] (http://wiki.osgeo.org/wiki/Tile_Map_Service_Specification) used by 
-[MB-Tiles] (https://github.com/mapbox/mbtiles-spec) have an origin at the lower left. Most tile 
-pyramids, such as [Open Street Map] (http://wiki.openstreetmap.org/wiki/Main_Page), 
-[OSMDroidAtlas] (http://wiki.openstreetmap.org/wiki/Main_Page), and [FalconView] (http://www.falconview.org/trac/FalconView) 
+OGC [Web Map Tile Service (WMTS)](http://portal.opengeospatial.org/files/?artifact_id=35326), 
+but some such as [TMS](http://wiki.osgeo.org/wiki/Tile_Map_Service_Specification) used by 
+[MB-Tiles](https://github.com/mapbox/mbtiles-spec) have an origin at the lower left. Most tile 
+pyramids, such as [Open Street Map](http://wiki.openstreetmap.org/wiki/Main_Page), 
+[OSMDroidAtlas](http://wiki.openstreetmap.org/wiki/Main_Page), and [FalconView](http://www.falconview.org/trac/FalconView) 
 use a zoom_out_level of 0 for the smallest map scale “whole world” zoom level view, another 
-convention adopted by WMTS, but some such as [Big Planet Tracks] (http://code.google.com/p/big-planet-tracks/) 
+convention adopted by WMTS, but some such as [Big Planet Tracks](http://code.google.com/p/big-planet-tracks/) 
 invert this convention and use 0 or 1 for the largest map scale “local detail” zoom level view.
 
-######[Note 7]
+###### [Note 7]
 
 GeoPackage applications may query the `tile_matrix_metadata` table or the tiles (matrix set) 
 table specified in clause 10.7 below to determine the minimum and maximum zoom levels for a given tile matrix table.  
 
-######[Note 8]
+###### [Note 8]
 
 GeoPackage applications may query the tiles (matrix set) table to determine which tiles are available at each zoom level.
 
-######[Note 9]
+###### [Note 9]
 
 GeoPackage applications that insert, update, or delete tiles (matrix set) table tiles row 
 records are responsible for maintaining the corresponding descriptive contents of the `tile_matrix_metadata` table.
 
-######[Note 10]
+###### [Note 10]
 
 The `geopackage_contents` table (see clause 8.2 above) contains coordinates that define a
 bounding box as the stated spatial extent for all tiles in a tile (matrix set) table. If the geographic 
 extent of the image data contained in these tiles is within but not equal to this bounding box, then the
 non-image area of matrix edge tiles must be padded with no-data values, preferably transparent ones.
 
-######[Note 11]
+###### [Note 11]
 
-The id primary key allows tiles table views to be created on [RasterLite] (https://www.gaia-gis.it/fossil/librasterlite/index) 
+The id primary key allows tiles table views to be created on [RasterLite](https://www.gaia-gis.it/fossil/librasterlite/index) 
 version 1 raster table implementations, where the tiles are selected based on a spatially indexed 
 bounding box in a separate metadata table.
 
-######[Note 12]
+###### [Note 12]
 
 The zoom_level / tile_column / tile_row unique key allows tiles to be selected and accessed 
-by “z, x, y”, a common convention used by [MBTiles] (https://github.com/mapbox/mbtiles-spec), 
-[Big Planet Tracks] (http://code.google.com/p/big-planet-tracks/), and other implementations. 
+by “z, x, y”, a common convention used by [MBTiles](https://github.com/mapbox/mbtiles-spec), 
+[Big Planet Tracks](http://code.google.com/p/big-planet-tracks/), and other implementations. 
 In a SQLite implementation this unique key is automatically indexed. This table / view definition 
-may also follow [RasterLite] (https://www.gaia-gis.it/fossil/librasterlite/index) version 1 conventions, 
+may also follow [RasterLite](https://www.gaia-gis.it/fossil/librasterlite/index) version 1 conventions, 
 where the tiles are selected based on a spatially indexed bounding box in a separate metadata table.
 
-######[Note 13]
+###### [Note 13]
 
 An integer column primary key is recommended for best performance.
 
-######[Note 14]
+###### [Note 14]
 
 The `sample_rasters` table created in SQL 5 above could be extended with one or more 
 geometry columns by calls to the `addGeometryColumn()` routine specified in clause 9.4 to have 
 both raster and geometry columns like the `sample_feature_table` shown in Figure3: GeoPackageTables above in clause 7.
 
-######[Note 15]
+###### [Note 15]
 
-This table naming convention is adopted from [RasterLite] (https://www.gaia-gis.it/fossil/librasterlite/index).
+This table naming convention is adopted from [RasterLite](https://www.gaia-gis.it/fossil/librasterlite/index).
 
-######[Note 16]
+###### [Note 16]
 
 In an SQLite implementation, the rowid value is always equal to the value of a single-column 
-primary key on an [integer column] (http://www.sqlite.org/lang_createtable.html#rowid).  Althought not 
+primary key on an [integer column](http://www.sqlite.org/lang_createtable.html#rowid).  Althought not 
 stated in the SQLite documentation, testing has not revealed a case where rowed values on a table with 
 any primry key column(s) defined are changed by a database reorganization performed by the VACUUM SQL command.
 
-######[Note 17]
+###### [Note 17]
 
 This data structure can be implemented as a table in the absence of geometry data types or spatial 
 indexes. When implemented as a view, the min/max x/y columns could reference ordinates of a bounding box geometry 
-in an underlying table when geometry data types are available, e.g. in [RasterLite] (https://www.gaia-gis.it/fossil/librasterlite/index).
+in an underlying table when geometry data types are available, e.g. in [RasterLite](https://www.gaia-gis.it/fossil/librasterlite/index).
 
 
-####Footnotes
+#### Footnotes
 
-######[31]  
+###### [31]  
 NGA Standardization Document: Implementation Profile for Tagged Image File Format (TIFF) and Geographic Tagged Image File Format (GeoTIFF), Version 2.0,  2001-10-26  https://nsgreg.nga.mil/doc/view?i=2224  
-######[32]  
+###### [32]  
 IETF RFC 3986 Uniform Resource Identifier (URI): Generic Syntax http://www.ietf.org/rfc/rfc3986.txt 
-######[33]  
+###### [33]  
 OGC08-131r3 The Specification Model — A Standard for Modular specifications  https://portal.opengeospatial.org/files/?artifact_id=34762 
 
